@@ -2,7 +2,7 @@ use strict; use warnings;
 
 package Pod::Readme::Brief;
 
-our $VERSION = '1.000';
+our $VERSION = '1.001';
 
 use Pod::Text;
 
