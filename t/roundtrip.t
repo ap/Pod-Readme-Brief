@@ -4,13 +4,13 @@ BEGIN { -f 'META.yml' or ( print "1..0 # SKIP running in a VCS checkout\n" ), ex
 
 use Pod::Readme::Brief;
 
-sub fh { open my $fh, '<', $_[0] or die "Could not open $_[0] to read: $!\n"; $fh }
+sub slurp { open my $fh, '<', $_[0] or die "Could not open $_[0] to read: $!\n"; local $/; readline $fh }
 
-my @src = readline fh $INC{'Pod/Readme/Brief.pm'};
+my $src = slurp $INC{'Pod/Readme/Brief.pm'};
 
-my $expected = do { local $/; readline fh 'README' };
+my $expected = slurp 'README';
 
-my $got = Pod::Readme::Brief->new( @src )->render( installer => 'eumm' );
+my $got = Pod::Readme::Brief->new( split //, $src, -1 )->render( installer => 'eumm' );
 
 my $diag = '';
 my $ok = $expected eq $got ? 'ok' : do { ( $diag = $got ) =~ s/^/# /mg; 'not ok' };

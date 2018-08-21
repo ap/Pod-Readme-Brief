@@ -6,7 +6,7 @@ our $VERSION = '1.000';
 
 use Pod::Text;
 
-sub new { my $class = shift; bless [ @_ ], $class }
+sub new { my $class = shift; bless [ split /(?<=\n)/, ( join '', @_ ), -1 ], $class }
 
 sub find_pod_section {
 	my ( $self, $section, $do_loose ) = ( shift, @_ );
@@ -133,8 +133,9 @@ The content of the C<LICENSE> section
 
 =head2 C<new>
 
-Creates an instance of the class from a list of lines, which must contain
-a well-formed full POD document, either by itself or embedded in Perl code.
+Creates an instance of the class from a string or a list of lines,
+which must contain a well-formed full POD document,
+either by itself or embedded in Perl code.
 
 =head2 C<render>
 
