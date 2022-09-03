@@ -71,7 +71,11 @@ __HERE__
 
 	open my $in,  '<', \$pod  or die $!;
 	open my $out, '>', \$text or die $!;
-	my $parser = Pod::Text->new( loose => 1, width => 73, indent => 0 );
+	my $parser = Pod::Text->new(
+		loose  => 1,
+		indent => 0,
+		width  => $arg{'width'} || 73,
+	);
 	$parser->parse_from_filehandle( $in, $out );
 	$text =~ s{\n+\z}{\n};
 
@@ -159,6 +163,12 @@ The value may be one of
 C<eumm> (for a distribution using C<Makefile.PL>),
 C<mb> (for a distribution using C<Build.PL>),
 or a false value (to omit manual installation instructions).
+
+=item C<width>
+
+The number of columns to which output will be reflowed by L<Pod::Text>.
+
+Defaults to 73.
 
 =back
 
