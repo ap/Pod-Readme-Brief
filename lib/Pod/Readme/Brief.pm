@@ -25,7 +25,7 @@ sub render {
 	s/\A\s+//, s/\s+\z// for $name;
 	die "Bad module name $name\n" unless $name =~ /\A\w+(?:::\w+)*\z/;
 
-	my @pod;
+	my @pod = "=pod\n\n";
 
 	my ( undef, @description ) = $self->find_pod_section( DESCRIPTION => 0 );
 	push @pod, "=head1 $name\n", @description;
@@ -61,7 +61,7 @@ __HERE__
 
 	push @pod, $self->find_pod_section( LICENSE => 1 );
 
-	my $pod = join '', "=pod\n\n", @pod;
+	my $pod = join '', @pod;
 	my $text;
 
 	open my $in,  '<', \$pod  or die $!;
