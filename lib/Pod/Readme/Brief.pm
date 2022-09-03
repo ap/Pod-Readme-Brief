@@ -27,6 +27,11 @@ sub render {
 
 	my @pod = "=pod\n\n";
 
+	if ( my @encoding = grep /^=encoding\s/, @$self ) {
+		die "More than one =encoding directive found\n" if @encoding > 1;
+		push @pod, @encoding, "\n";
+	}
+
 	my ( undef, @description ) = $self->find_pod_section( DESCRIPTION => 0 );
 	push @pod, "=head1 $name\n", @description;
 
