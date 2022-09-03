@@ -72,6 +72,8 @@ __HERE__
 	open my $in,  '<', \$pod  or die $!;
 	open my $out, '>', \$text or die $!;
 	my $parser = Pod::Text->new(
+		errors => 'die',
+		stderr => 1,
 		loose  => 1,
 		indent => 0,
 		width  => $arg{'width'} || 73,
