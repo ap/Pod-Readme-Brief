@@ -59,7 +59,8 @@ __HERE__
 
 	push @pod, $self->find_pod_section( LICENSE => 1 );
 
-	my ( $pod, $text ) = join '', "=pod\n\n", @pod;
+	my $pod = join '', "=pod\n\n", @pod;
+	my $text;
 
 	open my $in,  '<', \$pod  or die $!;
 	open my $out, '>', \$text or die $!;
