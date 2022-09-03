@@ -25,8 +25,10 @@ sub render {
 	s/\A\s+//, s/\s+\z// for $name;
 	die "Bad module name $name\n" unless $name =~ /\A\w+(?:::\w+)*\z/;
 
-	my @pod = $self->find_pod_section( DESCRIPTION => 0 );
-	$pod[0] =~ s/\s.*/ $name/;
+	my @pod;
+
+	my ( undef, @description ) = $self->find_pod_section( DESCRIPTION => 0 );
+	push @pod, "=head1 $name\n", @description;
 
 	( push @pod, $_ ), $pod[-1] =~ s!^\t!!mg for <<'__HERE__';
 	=head1 INSTALLATION
